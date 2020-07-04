@@ -1,0 +1,226 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import random
+
+def plot_function(x_vals: list, y_vals: list, plt_xlbl: str, plt_ylbl: str, plt_name: str=None, plt_size: tuple=(16, 8), plt_path: str='img/'):
+
+    if plt_name == None:
+        plt_name = plt_xlbl + "_vs_" + plt_ylbl
+    else:
+        plt_name = plt_name
+
+    plt.figure(figsize=plt_size)
+    plt.xlabel(plt_xlbl)
+    plt.ylabel(plt_ylbl)
+    plt.title(plt_name)
+    plt.plot(x_vals, y_vals)
+    plt.grid(True)
+    plt.savefig(plt_path + plt_name + '.png')
+    plt.show()
+
+# Persistence
+
+def persistence(n, counter=0):
+
+    if len(str(n)) == 1:
+        print(n)
+
+        return 'DONE in 1 Step'
+
+    result = 1
+    digits = [int(i) for i in str(n)]
+    for j in digits:
+        result *= j
+    counter += 1
+
+    print(result, counter)
+    persistence(result, counter)
+
+# Truncation of Primes
+
+def is_prime(n):
+    if n <= 1 or n % 1 > 0 or n == 4:
+        return False
+    for i in range(2, n//2):
+        if n % i == 0:
+
+            return False
+
+    return True
+
+def truncate_list(n):
+    trunc_list = []
+    for i in range(0, 10):
+        trunc_list.append(int(str(n) + str(i)))
+
+    return trunc_list
+
+def truncate(n):
+    primes = []
+    print(truncate_list(n))
+    for i in truncate_list(n):
+        if is_prime(i):
+            primes.append(i)
+    print(primes)
+    try:
+        choice = random.choice(primes)
+    except IndexError:
+        print("No Primes Left")
+        print("Max # of digits are: ")
+    else:
+        truncate(choice)
+
+# Perfect and Triperfect Numbers
+
+def is_perfect_number(n):
+
+    bool_perfect = False
+
+    def factors():
+
+        factor_list = []
+        for i in range(1, n+1):
+            if (n % i) == 0:
+                factor_list.append(i)
+                
+        return factor_list
+
+    def new_factor_list():
+
+        fact_list = factors()[:-1]
+
+        return fact_list
+    
+    num_factors = new_factor_list()
+    sum_of_factors = sum(num_factors)
+    if sum_of_factors == n:
+        bool_perfect = True
+
+        return bool_perfect
+    else:
+        bool_perfect = False
+
+        return bool_perfect
+
+def is_triperfect_number(n):
+    bool_triperfect = False
+    
+    def factor():
+        factor_list = []
+        for i in range(1, n + 1):
+            if (n % i) == 0:
+                factor_list.append(i)
+        return factor_list
+    
+    factor_list = factor()
+    if sum(factor_list) == 3 * n:
+        bool_triperfect = True
+
+        return bool_triperfect
+    else:
+        bool_triperfect == False
+
+        return bool_triperfect
+
+# Recaman Sequence
+
+def semi_circle(radius: float, shift: float, color: str, sign=1, n_points=100):
+    
+    x = np.linspace(-radius+shift, radius+shift, n_points)
+    y = []
+    for i in x:
+        y.append(sign * np.sqrt(radius ** 2 - (i - shift) ** 2))
+            
+    Y = plt.plot(x, y, c=color)
+    
+def recaman(n: int): 
+  
+    arr = [0] * n 
+    arr[0] = 0
+    for i in range(1, n): 
+        curr = arr[i-1] - i 
+        for j in range(0, i): 
+            if ((arr[j] == curr) or curr < 0): 
+                curr = arr[i-1] + i 
+                break
+        arr[i] = curr
+        
+    return arr
+
+def recaman_graph(num_loops: int, color: str):
+    A = recaman(num_loops)
+    sign = 1
+    for i in range(len(A) - 1):
+        
+        sign = sign
+        semi_circle((A[i+1] - A[i])*0.5, (A[i+1] - A[i]) * 0.5 + A[i], color, sign)
+        sign *= -1
+        
+    plt.savefig('recaman_seq_' + str(num_loops) + '.png')
+    plt.show()
+
+# Serpinsky Triangle
+
+class Point:
+    def __init__(self, x, y, color):
+        self.x = x
+        self.y = y
+        self.color = color
+    
+def roll():
+    return np.random.randint(1, 4)
+
+def get_distance(trace, main):
+    return ((trace.x - main.x), (trace.y - main.y))
+
+def rel_loc(distance):
+    dist_loc = [1, 1]
+    if distance[0] < 0:
+        dist_loc[0] = 0
+    else:
+        dist_loc[0] = 1
+        
+    if distance[1] < 0:
+        dist_loc[1] = 0
+    else:
+        dist_loc[1] = 1
+    
+    return dist_loc
+
+def generate_serpinsky(resolution: int=10000, vertices: int=3):
+    main_p = []
+    plt.figure()
+    for i in range(vertices):
+        main_p.append(Point(np.random.rand(), np.random.rand(), 'r'))
+    
+    for i in range(vertices):
+        plt.scatter(main_p[i].x, main_p[i].y, c=main_p[i].color)
+        plt.annotate(i, (main_p[i].x, main_p[i].y))
+
+    trace_p = Point(np.random.rand(), np.random.rand(), 'black')
+    plt.scatter(trace_p.x, trace_p.y, c=trace_p.color)
+    new_p = []
+
+    for i in range(10000):
+        roll_dice = roll()
+        if (roll_dice == 1):
+            new_coords = get_distance(trace_p, main_p[0])
+        elif (roll_dice == 2):
+            new_coords = get_distance(trace_p, main_p[1])
+        elif (roll_dice == 3):
+            new_coords = get_distance(trace_p, main_p[2])
+
+        if rel_loc(new_coords) == [1, 1]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+        elif rel_loc(new_coords) == [0, 0]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+        elif rel_loc(new_coords) == [1, 0]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+        elif rel_loc(new_coords) == [0, 1]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+
+        trace_p = new_p[i]
+        plt.scatter(new_p[i].x, new_p[i].y, c=new_p[i].color, s=1)
+        
+    plt.show()
