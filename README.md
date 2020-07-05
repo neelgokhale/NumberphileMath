@@ -171,8 +171,8 @@ is_triperfect_number(120)
 ## Sierpiński Triangle through Pseudo-Randomness
 
 Ok this one is crazy... I cannot fully explain how it works but the following is the basic algorithm:
-1. Generate 3 main points at random locations (red)
-2. Generate 1st trace point at random location
+1. Generate `3` main points at random locations (red)
+2. Generate `1`st trace point at random location
 3. roll dice
    - if dice at `1, 2` -> go to main point `0`, `3, 4` -> main point `1`, and `5, 6` -> main point `2`
    - find distance between trace point and main point
