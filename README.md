@@ -251,7 +251,7 @@ for i in range(10000):
 
 ![png](/img/output_11_0.png)
 
-# Recaman Sequence
+## Recaman Sequence
 Here is a seemingly ordered, yet chaotic sequence. The algorithm to follow is:
 
 ```
@@ -299,9 +299,59 @@ def recaman_graph(num_loops: int, color: str):
         sign *= -1
     plt.savefig('recaman_seq_' + str(num_loops) + '.png')
     
-if __name__ == '__main__':
-    recaman_graph(50, 'purple')
+
 ```
 
-
 ![png](/img/output_17_0.png)
+
+
+## Amazing Graphs: Prime Number Trapezoids
+
+Using a simple process (i.e. take a prime number, find its binary representation, flip it and find the decimal difference), I mapped the first 10000 prime numbers and their binary differences into a scatter plot. The result is kinda cool!
+
+```python
+
+def dec_to_bin(n: int, reversed: bool=False):
+
+    binary = bin(n)[2:]
+    if reversed:
+        return binary[::-1]
+    else:
+        return binary
+
+def bin_to_dec(bin_string: str, reversed: bool=True):
+
+    number = 0
+
+    if reversed:
+        bin_string = bin_string[::-1]
+    
+    for i, num in enumerate(bin_string):
+        if num == '1':
+            number += 2 ** i
+    
+    return number
+
+def get_primes():
+
+    with open('10000primes.txt', 'r') as fobj:
+        prime_lst = [int(num) for num in fobj.read().split()]
+
+    return prime_lst
+
+def generate_prime_trapz():
+
+    prime_lst = get_primes()
+    bin_lst = [dec_to_bin(i) for i in prime_lst]
+    rev_bin_lst = [dec_to_bin(i, reversed=True) for i in prime_lst]
+    diff_lst = [prime_lst[i] - bin_to_dec(rev_bin_lst[i]) for i in range(10000)]
+
+    df_binprimes = pd.DataFrame({'primes':prime_lst, 'bin_primes': bin_lst, 'rev_bin_primes': rev_bin_lst, 'diff': diff_lst})
+
+    plt.figure()
+    plt.scatter(df_binprimes['primes'], df_binprimes['diff'], c='black', s=0.1)
+    plt.show()
+
+```
+
+![png](/img/prime_trapz.png)
