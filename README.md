@@ -3,6 +3,18 @@ I love [Numberphile](https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A)! 
 
 Disclaimer: I know nothing about Number Theory...
 
+## Table of Contents
+
+<!--ts-->
+- [Persistence](#persistence)
+- [Prime Truncation](#prime-truncation)
+- [Perfect Numbers](#perfect-numbers)
+- [Triperfect Numbers](#triperfect-numbers)
+- [Sierpiński Triangle through Pseudo-Randomness](#sierpiński-triangle-through-pseudo-randomness)
+- [Recaman Sequence](#recaman-sequence)
+- [Amazing Graphs: Prime Number Trapezoids](#amazing-graphs-prime-number-trapezoids)
+<!--te-->
+
 ## Persistence
 
 Well, multiplicative persistence to be precise. This function multiplies a given number's digits until the resulting product is a single digit value. The number with the most multiplicative persistence is `277777788888899`, with `11` iterations.
@@ -156,16 +168,16 @@ is_triperfect_number(120)
 
     True
 
-## Sierpiński triangle Through Pseudo-Randomness
+## Sierpiński Triangle through Pseudo-Randomness
 
 Ok this one is crazy... I cannot fully explain how it works but the following is the basic algorithm:
 1. Generate 3 main points at random locations (red)
 2. Generate 1st trace point at random location
 3. roll dice
-- if dice at `1, 2` -> go to main point `0`, `3, 4` -> main point `1`, and `5, 6` -> main point `2`
-- find distance between trace point and main point
-- find relative loc based on distance
-- find new point
+   - if dice at `1, 2` -> go to main point `0`, `3, 4` -> main point `1`, and `5, 6` -> main point `2`
+   - find distance between trace point and main point
+   - find relative loc based on distance
+   - find new point
 4. Set trace point as new point
 5. append new point to new point array
 6. plot scatter with updated data
