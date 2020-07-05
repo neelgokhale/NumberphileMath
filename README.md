@@ -151,9 +151,6 @@ def is_triperfect_number(n):
 is_triperfect_number(120)
 ```
 
-
-
-
     True
 
 ## Sierpiński triangle Through Pseudo-Randomness
@@ -189,7 +186,7 @@ def get_distance(trace, main):
 
 def rel_loc(distance):
     dist_loc = [1, 1]
-    if distance[0] < 0: #x dist is negative
+    if distance[0] < 0:
         dist_loc[0] = 0
     else:
         dist_loc[0] = 1
@@ -201,52 +198,48 @@ def rel_loc(distance):
     
     return dist_loc
 
+def generate_serpinsky(resolution: int=10000, vertices: int=3):
+    main_p = []
+    plt.figure()
+    for i in range(vertices):
+        main_p.append(Point(np.random.rand(), np.random.rand(), 'r'))
+    
+    for i in range(vertices):
+        plt.scatter(main_p[i].x, main_p[i].y, c=main_p[i].color)
+        plt.annotate(i, (main_p[i].x, main_p[i].y))
+
+    trace_p = Point(np.random.rand(), np.random.rand(), 'black')
+    plt.scatter(trace_p.x, trace_p.y, c=trace_p.color)
+    new_p = []
+
+    for i in range(10000):
+        roll_dice = roll()
+        if (roll_dice == 1):
+            new_coords = get_distance(trace_p, main_p[0])
+        elif (roll_dice == 2):
+            new_coords = get_distance(trace_p, main_p[1])
+        elif (roll_dice == 3):
+            new_coords = get_distance(trace_p, main_p[2])
+
+        relative_loc = rel_loc(new_coords)
+
+        if relative_loc == [1, 1]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+        elif relative_loc == [0, 0]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+        elif relative_loc == [1, 0]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+        elif relative_loc == [0, 1]:
+            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
+
+        trace_p = new_p[i]
+        plt.scatter(new_p[i].x, new_p[i].y, c=new_p[i].color, s=1)
+        
+    plt.show()
+
 ```
-
-
-```python
-plt.figure()
-main_p = []
-for i in range(3):
-    main_p.append(Point(np.random.rand(), np.random.rand(), 'r'))
-
-for i in range(3):
-    plt.scatter(main_p[i].x, main_p[i].y, c=main_p[i].color)
-    plt.annotate(i, (main_p[i].x, main_p[i].y))
-```
-
 
 ![png](/img/output_10_0.png)
-
-
-
-```python
-trace_p = Point(np.random.rand(), np.random.rand(), 'black')
-plt.scatter(trace_p.x, trace_p.y, c=trace_p.color)
-new_p = []
-
-for i in range(10000):
-    roll_dice = roll()
-    if ((roll_dice == 1) or (roll_dice == 2)):
-        new_coords = get_distance(trace_p, main_p[0])
-    elif ((roll_dice == 3) or (roll_dice == 4)):
-        new_coords = get_distance(trace_p, main_p[1])
-    elif ((roll_dice == 5) or (roll_dice == 6)):
-        new_coords = get_distance(trace_p, main_p[2])
-    
-    if rel_loc(new_coords) == [1, 1]:
-        new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
-    elif rel_loc(new_coords) == [0, 0]:
-        new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
-    elif rel_loc(new_coords) == [1, 0]:
-        new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
-    elif rel_loc(new_coords) == [0, 1]:
-        new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
-    
-    trace_p = new_p[i]
-    plt.scatter(new_p[i].x, new_p[i].y, c=new_p[i].color, s=1)
-
-```
 
 
 ![png](/img/output_11_0.png)
