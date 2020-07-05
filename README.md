@@ -1,5 +1,5 @@
-# Numberphile_math
-I love Numberphile! These functions were coded in my feeble attempts to generate a python package filled with math-related madness (and sometimes, beauty). 
+# Numberphile Math
+I love [Numberphile](https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A)! These functions were coded in my feeble attempts to generate a python package filled with math-related madness (and sometimes, beauty). 
 
 Disclaimer: I know nothing about Number Theory...
 
