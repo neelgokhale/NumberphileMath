@@ -250,7 +250,7 @@ def bin_to_dec(bin_string: str, reversed: bool=True):
 
 def get_primes():
 
-    with open('10000primes.txt', 'r') as fobj:
+    with open('data/10000primes.txt', 'r') as fobj:
         prime_lst = [int(num) for num in fobj.read().split()]
 
     return prime_lst
