@@ -5,7 +5,7 @@ Disclaimer: I know nothing about Number Theory...
 
 ## Persistence
 
-Well, multiplicative persistence to be precise. This function multiplies a given number's digits until the resulting product is a single digit value. The number with the most multiplicative persistence is 277777788888899, with 11 iterations.
+Well, multiplicative persistence to be precise. This function multiplies a given number's digits until the resulting product is a single digit value. The number with the most multiplicative persistence is `277777788888899`, with `11` iterations.
 
 ```python
 def persistence(n, counter=0):
@@ -34,7 +34,7 @@ persistence(2227788888889)
     
 ## Prime Truncation
 
-This one's a bit silly. So you start with any given number, and if that number is prime, you truncate all the numbers from 0 to 9 to this number. Then check if that new number is prime, create a list of those new prime numbers and... repeat the process until you cannot make another prime number. Yeah, definately wierd.
+This one's a bit silly. So you start with any given number, and if that number is prime, you truncate all the numbers from `0` to `9` to this number. Then check if that new number is prime, create a list of those new prime numbers and... repeat the process until you cannot make another prime number. Yeah, definately wierd.
 
 ```python
 import random
@@ -162,7 +162,7 @@ Ok this one is crazy... I cannot fully explain how it works but the following is
 1. Generate 3 main points at random locations (red)
 2. Generate 1st trace point at random location
 3. roll dice
-- if dice at 1, 2 -> go to main point 0, 3, 4 -> main point 1, and 5, 6 -> main point 2
+- if dice at `1, 2` -> go to main point `0`, `3, 4` -> main point `1`, and `5, 6` -> main point `2`
 - find distance between trace point and main point
 - find relative loc based on distance
 - find new point
@@ -307,7 +307,7 @@ def recaman_graph(num_loops: int, color: str):
 
 ## Amazing Graphs: Prime Number Trapezoids
 
-Using a simple process (i.e. take a prime number, find its binary representation, flip it and find the decimal difference), I mapped the first 10000 prime numbers and their binary differences into a scatter plot. The result is kinda cool!
+Using a simple process (i.e. take a prime number, find its binary representation, flip it and find the decimal difference), I mapped the first `10000` prime numbers and their binary differences into a scatter plot. The result is kinda cool!
 
 ```python
 
