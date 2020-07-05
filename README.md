@@ -1,11 +1,23 @@
-# Numberphile_math
-I love Numberphile! These functions were coded in my feeble attempts to generate a python package filled with math-related madness (and sometimes, beauty). 
+# Numberphile Math
+I love [Numberphile](https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A)! These functions were coded in my feeble attempts to generate a python package filled with math-related madness (and sometimes, beauty). 
 
 Disclaimer: I know nothing about Number Theory...
 
-## Persistence
+## Table of Contents
 
-Well, multiplicative persistence to be precise. This function multiplies a given number's digits until the resulting product is a single digit value. The number with the most multiplicative persistence is 277777788888899, with 11 iterations.
+<!--ts-->
+- [Persistence](#persistence)
+- [Prime Truncation](#prime-truncation)
+- [Perfect Numbers](#perfect-numbers)
+- [Triperfect Numbers](#triperfect-numbers)
+- [Sierpiński Triangle through Pseudo-Randomness](#sierpiński-triangle-through-pseudo-randomness)
+- [Recaman Sequence](#recaman-sequence)
+- [Amazing Graphs: Prime Number Trapezoids](#amazing-graphs-prime-number-trapezoids)
+<!--te-->
+
+## [Persistence](https://www.youtube.com/watch?v=Wim9WJeDTHQ)
+
+Well, multiplicative persistence to be precise. This function multiplies a given number's digits until the resulting product is a single digit value. The number with the most multiplicative persistence is `277777788888899`, with `11` iterations.
 
 ```python
 def persistence(n, counter=0):
@@ -32,9 +44,9 @@ persistence(2227788888889)
     0 3
     0
     
-## Prime Truncation
+## [Prime Truncation](https://www.youtube.com/watch?v=azL5ehbw_24&t=249s)
 
-This one's a bit silly. So you start with any given number, and if that number is prime, you truncate all the numbers from 0 to 9 to this number. Then check if that new number is prime, create a list of those new prime numbers and... repeat the process until you cannot make another prime number. Yeah, definately wierd.
+This one's a bit silly. So you start with any given number, and if that number is prime, you truncate all the numbers from `0` to `9` to this number. Then check if that new number is prime, create a list of those new prime numbers and... repeat the process until you cannot make another prime number. Yeah, definately wierd.
 
 ```python
 import random
@@ -82,7 +94,7 @@ truncate(4)
     No Primes Left
     Max # of digits are: 
     
-## Perfect Numbers
+## [Perfect Numbers](https://www.youtube.com/watch?v=q8n15q1v4Xo&t=491s)
 
 The factors of these numbers add up to equal that number.
 
@@ -123,7 +135,7 @@ perfect_factor_list
     [0, 6, 28, 496]
 
 
-## Triperfect Numbers
+## [Triperfect Numbers](https://www.youtube.com/watch?v=DhPtIf-hpuU)
 
 ```python
 def is_triperfect_number(n):
@@ -153,16 +165,16 @@ is_triperfect_number(120)
 
     True
 
-## Sierpiński triangle Through Pseudo-Randomness
+## [Sierpiński Triangle through Pseudo-Randomness](https://www.youtube.com/watch?v=kbKtFN71Lfs&t=215s)
 
 Ok this one is crazy... I cannot fully explain how it works but the following is the basic algorithm:
-1. Generate 3 main points at random locations (red)
-2. Generate 1st trace point at random location
+1. Generate `3` main points at random locations (red)
+2. Generate `1`st trace point at random location
 3. roll dice
-- if dice at 1, 2 -> go to main point 0, 3, 4 -> main point 1, and 5, 6 -> main point 2
-- find distance between trace point and main point
-- find relative loc based on distance
-- find new point
+   - if dice at `1, 2` -> go to main point `0`, `3, 4` -> main point `1`, and `5, 6` -> main point `2`
+   - find distance between trace point and main point
+   - find relative loc based on distance
+   - find new point
 4. Set trace point as new point
 5. append new point to new point array
 6. plot scatter with updated data
@@ -244,7 +256,8 @@ def generate_serpinsky(resolution: int=10000, vertices: int=3):
 
 ![png](/img/output_11_0.png)
 
-## Recaman Sequence
+## [Recaman Sequence](https://www.youtube.com/watch?v=FGC5TdIiT9U&t=406s)
+
 Here is a seemingly ordered, yet chaotic sequence. The algorithm to follow is:
 
 ```
@@ -298,9 +311,9 @@ def recaman_graph(num_loops: int, color: str):
 ![png](/img/output_17_0.png)
 
 
-## Amazing Graphs: Prime Number Trapezoids
+## [Amazing Graphs: Prime Number Trapezoids](https://www.youtube.com/watch?v=pAMgUB51XZA&t=563s)
 
-Using a simple process (i.e. take a prime number, find its binary representation, flip it and find the decimal difference), I mapped the first 10000 prime numbers and their binary differences into a scatter plot. The result is kinda cool!
+Using a simple process (i.e. take a prime number, find its binary representation, flip it and find the decimal difference), I mapped the first `10000` prime numbers and their binary differences into a scatter plot. The result is kinda cool!
 
 ```python
 
