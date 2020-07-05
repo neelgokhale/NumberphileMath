@@ -40,21 +40,13 @@ def persistence(n, counter=0):
 # Truncation of Primes
 
 def is_prime(n):
-    if n <= 1 or n % 1 > 0 or n == 4:
-        return False
-    for i in range(2, n//2):
+    for i in range(2, int(n // 2) + 1):
         if n % i == 0:
-
             return False
-
-    return True
+    return n <= 1 or n % 1 > 0
 
 def truncate_list(n):
-    trunc_list = []
-    for i in range(0, 10):
-        trunc_list.append(int(str(n) + str(i)))
-
-    return trunc_list
+    return [n * 10 + i for i in range(0, 10)]
 
 def truncate(n):
     primes = []
@@ -74,9 +66,6 @@ def truncate(n):
 # Perfect and Triperfect Numbers
 
 def is_perfect_number(n):
-
-    bool_perfect = False
-
     def factors():
 
         factor_list = []
@@ -94,18 +83,9 @@ def is_perfect_number(n):
     
     num_factors = new_factor_list()
     sum_of_factors = sum(num_factors)
-    if sum_of_factors == n:
-        bool_perfect = True
-
-        return bool_perfect
-    else:
-        bool_perfect = False
-
-        return bool_perfect
+    return sum_of_factors == n
 
 def is_triperfect_number(n):
-    bool_triperfect = False
-    
     def factor():
         factor_list = []
         for i in range(1, n + 1):
@@ -114,14 +94,7 @@ def is_triperfect_number(n):
         return factor_list
     
     factor_list = factor()
-    if sum(factor_list) == 3 * n:
-        bool_triperfect = True
-
-        return bool_triperfect
-    else:
-        bool_triperfect == False
-
-        return bool_triperfect
+    return sum(factor_list) == 3 * n
 
 # Recaman Sequence
 
@@ -137,7 +110,6 @@ def semi_circle(radius: float, shift: float, color: str, sign=1, n_points=100):
 def recaman(n: int): 
   
     arr = [0] * n 
-    arr[0] = 0
     for i in range(1, n): 
         curr = arr[i-1] - i 
         for j in range(0, i): 
@@ -175,18 +147,7 @@ def get_distance(trace, main):
     return ((trace.x - main.x), (trace.y - main.y))
 
 def rel_loc(distance):
-    dist_loc = [1, 1]
-    if distance[0] < 0:
-        dist_loc[0] = 0
-    else:
-        dist_loc[0] = 1
-        
-    if distance[1] < 0:
-        dist_loc[1] = 0
-    else:
-        dist_loc[1] = 1
-    
-    return dist_loc
+    return [int(distance[0] >= 0), int(distance[1] >= 0)]
 
 def generate_serpinsky(resolution: int=10000, vertices: int=3):
     main_p = []
@@ -204,12 +165,8 @@ def generate_serpinsky(resolution: int=10000, vertices: int=3):
 
     for i in range(10000):
         roll_dice = roll()
-        if (roll_dice == 1):
-            new_coords = get_distance(trace_p, main_p[0])
-        elif (roll_dice == 2):
-            new_coords = get_distance(trace_p, main_p[1])
-        elif (roll_dice == 3):
-            new_coords = get_distance(trace_p, main_p[2])
+        if roll_dice in [1, 2, 3]:
+            new_coords = get_distance(trace_p, main_p[roll_dice - 1])
 
         relative_loc = rel_loc(new_coords)
 
@@ -230,12 +187,8 @@ def generate_serpinsky(resolution: int=10000, vertices: int=3):
 # Amazing Graphs
 
 def dec_to_bin(n: int, reversed: bool=False):
-
     binary = bin(n)[2:]
-    if reversed:
-        return binary[::-1]
-    else:
-        return binary
+    return binary[::-1] if reversed else binary
 
 def bin_to_dec(bin_string: str, reversed: bool=True):
 
