@@ -157,7 +157,7 @@ def recaman_graph(num_loops: int, color: str):
         semi_circle((A[i+1] - A[i])*0.5, (A[i+1] - A[i]) * 0.5 + A[i], color, sign)
         sign *= -1
         
-    plt.savefig('recaman_seq_' + str(num_loops) + '.png')
+    plt.savefig('/img/recaman_seq_' + str(num_loops) + '.png')
     plt.show()
 
 # Serpinsky Triangle
@@ -224,3 +224,47 @@ def generate_serpinsky(resolution: int=10000, vertices: int=3):
         plt.scatter(new_p[i].x, new_p[i].y, c=new_p[i].color, s=1)
         
     plt.show()
+
+# Amazing Graphs
+
+def dec_to_bin(n: int, reversed: bool=False):
+
+    binary = bin(n)[2:]
+    if reversed:
+        return binary[::-1]
+    else:
+        return binary
+
+def bin_to_dec(bin_string: str, reversed: bool=True):
+
+    number = 0
+
+    if reversed:
+        bin_string = bin_string[::-1]
+    
+    for i, num in enumerate(bin_string):
+        if num == '1':
+            number += 2 ** i
+    
+    return number
+
+def get_primes():
+
+    with open('10000primes.txt', 'r') as fobj:
+        prime_lst = [int(num) for num in fobj.read().split()]
+
+    return prime_lst
+
+def generate_prime_trapz():
+
+    prime_lst = get_primes()
+    bin_lst = [dec_to_bin(i) for i in prime_lst]
+    rev_bin_lst = [dec_to_bin(i, reversed=True) for i in prime_lst]
+    diff_lst = [prime_lst[i] - bin_to_dec(rev_bin_lst[i]) for i in range(10000)]
+
+    df_binprimes = pd.DataFrame({'primes':prime_lst, 'bin_primes': bin_lst, 'rev_bin_primes': rev_bin_lst, 'diff': diff_lst})
+
+    plt.figure()
+    plt.scatter(df_binprimes['primes'], df_binprimes['diff'], c='black', s=0.1)
+    plt.show()
+
