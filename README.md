@@ -361,3 +361,90 @@ def generate_prime_trapz():
 ```
 
 ![png](/img/prime_trapz.png)
+
+## [Amazing Graphs: Forest Fire Sequence](https://www.youtube.com/watch?v=o8c4uYnnNnc)
+
+This was probably the hardest one to code. The forest fire sequence involves a hectic algorithm:
+1. Generate an array, `FF = [1, 1]`
+2. Now keep appending integer values, prioritizing the smallest positive number greater than 0 (which is 1)
+3. The main rule involves avoiding arithmetic progression, meaning that any consecutively spaced terms in `FF` should not differ by the same amount. Briefly, for any `i` and `k`:
+
+```
+FF[i] - FF[i + k]) != (FF[i + k] - FF[i + 2 * k]
+```
+4. If there is arithmetic progression with a newly appended number, increase that number by 1 and repeat the check.
+
+This algorithm results in a beautiful fractal scatterplot, reminiscent of wild fire (hence the name). Because my computer was extermely slow, I have graphed within `x:[1, 10000]`. Feel free to increase/decrease the `num_terms` var according to your needs.
+
+```python
+
+def generate_forest_fires(num_limit: int=10000, document: bool=False, marker_size: float=0.5):
+
+    """
+    *Generates a graph of the forest fire sequence (A229037)
+    *num_limit and document set at default values, recommended for low-performance computers
+    *marker_size = 0.5 is optimum for better looking graph
+    *Setting bool document = True makes the function print the algorithmic procedure at each step
+    *Outputs ff(num_limit) array
+    """
+    ff = [1, 1]
+    run = True
+    counter = 0
+    trial = 1
+
+    while run:
+
+        klist = 0
+        yes_count = 0
+        ff.append(trial)
+
+        if len(ff) % 2 == 0:
+            klist = (math.floor((len(ff) - 1) / 2)) + 1
+        else:
+            klist = (math.floor(len(ff) / 2)) + 1
+
+        for k in range(1, klist):
+            
+            last_ind = len(ff) - 1
+            if document:
+                print("--------")
+                print("ff[last_ind] = " + str(ff[last_ind]))
+                print("ff[last_ind - k] = " + str(ff[last_ind - k]))
+                print("ff[last_ind - 2 * k] = " + str(ff[last_ind - 2 * k]))
+                
+            if (ff[last_ind] - ff[last_ind - k]) == (ff[last_ind - k] - ff[last_ind - (2 * k)]):
+                if document:
+                    print("no" + " -> difference(" + str(ff[last_ind] - ff[last_ind - k]) + "," + str(ff[last_ind - k] - ff[last_ind - (2 * k)]) + ")")
+                ff = ff[:len(ff) - 1]
+                trial += 1
+                break
+            elif (ff[last_ind] - ff[last_ind - k]) != (ff[last_ind - k] - ff[last_ind - (2 * k)]):
+                if document:
+                    print("yes" + " -> difference(" + str(ff[last_ind] - ff[last_ind - k]) + "," + str(ff[last_ind - k] - ff[last_ind - (2 * k)]) + ")")
+                yes_count += 1
+                if yes_count == klist - 1:   
+                    counter += 1
+                    if document:
+                        print(counter)
+                    trial = 1
+                    break
+                
+        if counter == 10000:
+            print("Done!")
+            run = False
+
+    plt.scatter(range(len(ff)), ff, s=marker_size)
+    plt.savefig('/img/forest_fires.png')
+    plt.show()
+
+    return ff
+
+```
+```python
+generate_forest_fires()
+```
+![png](/img/forest_fires.png)
+
+If you use a (more) competent computer:
+
+![png](/img/forest_fires_100000.png)
