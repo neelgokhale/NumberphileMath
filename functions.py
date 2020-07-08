@@ -223,3 +223,65 @@ def generate_prime_trapz():
     plt.scatter(df_binprimes['primes'], df_binprimes['diff'], c='black', s=0.1)
     plt.show()
 
+# Forest Fire Sequence
+
+def generate_forest_fires(num_limit: int=10000, document: bool=False, marker_size: float=0.5):
+
+    """
+    *Generates a graph of the forest fire sequence (A229037)
+    *num_limit and document set at default values, recommended for low-performance computers
+    *marker_size = 0.5 is optimum for better looking graph
+    *Setting bool document = True makes the function print the algorithmic procedure at each step
+    *Outputs ff(num_limit) array
+    """
+    ff = [1, 1]
+    run = True
+    counter = 0
+    trial = 1
+
+    while run:
+
+        klist = 0
+        yes_count = 0
+        ff.append(trial)
+
+        if len(ff) % 2 == 0:
+            klist = (math.floor((len(ff) - 1) / 2)) + 1
+        else:
+            klist = (math.floor(len(ff) / 2)) + 1
+
+        for k in range(1, klist):
+            
+            last_ind = len(ff) - 1
+            if document:
+                print("--------")
+                print("ff[last_ind] = " + str(ff[last_ind]))
+                print("ff[last_ind - k] = " + str(ff[last_ind - k]))
+                print("ff[last_ind - 2 * k] = " + str(ff[last_ind - 2 * k]))
+                
+            if (ff[last_ind] - ff[last_ind - k]) == (ff[last_ind - k] - ff[last_ind - (2 * k)]):
+                if document:
+                    print("no" + " -> difference(" + str(ff[last_ind] - ff[last_ind - k]) + "," + str(ff[last_ind - k] - ff[last_ind - (2 * k)]) + ")")
+                ff = ff[:len(ff) - 1]
+                trial += 1
+                break
+            elif (ff[last_ind] - ff[last_ind - k]) != (ff[last_ind - k] - ff[last_ind - (2 * k)]):
+                if document:
+                    print("yes" + " -> difference(" + str(ff[last_ind] - ff[last_ind - k]) + "," + str(ff[last_ind - k] - ff[last_ind - (2 * k)]) + ")")
+                yes_count += 1
+                if yes_count == klist - 1:   
+                    counter += 1
+                    if document:
+                        print(counter)
+                    trial = 1
+                    break
+                
+        if counter == 10000:
+            print("Done!")
+            run = False
+
+    plt.scatter(range(len(ff)), ff, s=marker_size)
+    plt.savefig('/img/forest_fire.png')
+    plt.show()
+
+    return ff
