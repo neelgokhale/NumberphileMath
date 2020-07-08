@@ -13,6 +13,7 @@ Disclaimer: I know nothing about Number Theory...
 - [Sierpiński Triangle through Pseudo-Randomness](#sierpiński-triangle-through-pseudo-randomness)
 - [Recaman Sequence](#recaman-sequence)
 - [Amazing Graphs: Prime Number Trapezoids](#amazing-graphs-prime-number-trapezoids)
+- [Amazing Graphs: Forest Fire Sequence](#amazing-graphs-forest-fire-sequence)
 <!--te-->
 
 ## [Persistence](https://www.youtube.com/watch?v=Wim9WJeDTHQ)
@@ -370,7 +371,7 @@ This was probably the hardest one to code. The forest fire sequence involves a h
 3. The main rule involves avoiding arithmetic progression, meaning that any consecutively spaced terms in `FF` should not differ by the same amount. Briefly, for any `i` and `k`:
 
 ```
-FF[i] - FF[i + k]) != (FF[i + k] - FF[i + 2 * k]
+(FF[i] - FF[i + k]) != (FF[i + k] - FF[i + 2 * k])
 ```
 4. If there is arithmetic progression with a newly appended number, increase that number by 1 and repeat the check.
 
