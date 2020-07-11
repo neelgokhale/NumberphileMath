@@ -245,14 +245,8 @@ def generate_serpinsky(resolution: int = 10000, vertices: int = 3):
             new_coords = get_distance(trace_p, main_p[roll_dice - 1])
 
         relative_loc = rel_loc(new_coords)
-
-        if relative_loc == [1, 1]:
-            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
-        elif relative_loc == [0, 0]:
-            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
-        elif relative_loc == [1, 0]:
-            new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
-        elif relative_loc == [0, 1]:
+        
+        if relative_loc in [[0, 0], [0, 1], [1, 0], [1, 1]]:
             new_p.append(Point(trace_p.x - new_coords[0]/2, trace_p.y - new_coords[1]/2, 'b'))
 
         trace_p = new_p[i]
