@@ -6,4 +6,4 @@ __pycache__/
 # Test files
 
 test.py
-
+.vscode
