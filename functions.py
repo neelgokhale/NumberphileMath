@@ -19,10 +19,15 @@ def plot_function(x_vals: list, y_vals: list, plt_xlbl: str, plt_ylbl: str, plt_
     plt.grid(True)
     plt.savefig(plt_path + plt_name + '.png')
     plt.show()
+    
 
 # Persistence
 
-def persistence(n, counter=0):
+def persistence(n: int, counter: int=0):
+
+    """
+    Recursively finds the multiplicative persistence of integer `n` and counts the iterations
+    """
 
     if len(str(n)) == 1:
         print(n)
@@ -40,16 +45,32 @@ def persistence(n, counter=0):
 
 # Truncation of Primes
 
-def is_prime(n):
+def is_prime(n: int):
+
+    """
+    Returns an integer value `(1, 0)` if input number, `n` is prime
+    """
+
     for i in range(2, int(n // 2) + 1):
         if n % i == 0:
+
             return False
+
     return n <= 1 or n % 1 > 0
 
-def truncate_list(n):
+def truncate_list(n: int):
+
+    """
+    Returns a list of the number to be truncated
+    """
+
     return [n * 10 + i for i in range(0, 10)]
 
-def truncate(n):
+def truncate(n: int):
+
+    """
+    Truncates the elements in the truncate list
+    """
     primes = []
     print(truncate_list(n))
     for i in truncate_list(n):
@@ -66,8 +87,17 @@ def truncate(n):
 
 # Perfect and Triperfect Numbers
 
-def is_perfect_number(n):
+def is_perfect_number(n: int):
+
+    """
+    Determines if the positive integer `n` is a perfect number
+    """
+
     def factors():
+
+        """
+        Returns a list of all factors, `factor_list` of all factors if integer `n`
+        """
 
         factor_list = []
         for i in range(1, n+1):
@@ -78,15 +108,25 @@ def is_perfect_number(n):
 
     def new_factor_list():
 
-        fact_list = factors()[:-1]
+        """
+        Creates new factor list without the factored number
+        """
 
-        return fact_list
+        factor_list = factors()[:-1]
+
+        return factor_list
     
     num_factors = new_factor_list()
     sum_of_factors = sum(num_factors)
+
     return sum_of_factors == n
 
-def is_triperfect_number(n):
+def is_triperfect_number(n: int):
+
+    """
+    Determines if integer `n` is a triperfect number
+    """
+    
     def factor():
         factor_list = []
         for i in range(1, n + 1):
@@ -101,6 +141,11 @@ def is_triperfect_number(n):
 
 def semi_circle(radius: float, shift: float, color: str, sign=1, n_points=100):
     
+    """
+    - Plots a semicircle of radius `r`, x-shift `shift` and vertical orientation of `sign`
+    - Color and resolution is set by string `color` and integer `n_points`
+    """
+
     x = np.linspace(-radius+shift, radius+shift, n_points)
     y = []
     for i in x:
@@ -108,7 +153,11 @@ def semi_circle(radius: float, shift: float, color: str, sign=1, n_points=100):
             
     Y = plt.plot(x, y, c=color)
     
-def recaman(n: int): 
+def recaman(n: int):
+    
+    """
+    Outputs the recaman sequence of `n` terms
+    """
   
     arr = [0] * n 
     for i in range(1, n): 
@@ -122,6 +171,10 @@ def recaman(n: int):
     return arr
 
 def recaman_graph(num_loops: int, color: str):
+
+    """
+    Graphs the recaman sequence with consecutive semicircles illustrating number jumps
+    """
     A = recaman(num_loops)
     sign = 1
     for i in range(len(A) - 1):
@@ -136,21 +189,43 @@ def recaman_graph(num_loops: int, color: str):
 # Serpinsky Triangle
 
 class Point:
+
     def __init__(self, x, y, color):
         self.x = x
         self.y = y
         self.color = color
     
 def roll():
+
+    """
+    Random dice roll of 1, 2, 3
+    """
+
     return np.random.randint(1, 4)
 
 def get_distance(trace, main):
+
+    """
+    Get distance vector between 2 point objects `trace` and `main`
+    """
+
     return ((trace.x - main.x), (trace.y - main.y))
 
 def rel_loc(distance):
+
+    """
+    Determine the relative location of `get_distance()`
+    """
+
     return [int(distance[0] >= 0), int(distance[1] >= 0)]
 
-def generate_serpinsky(resolution: int=10000, vertices: int=3):
+def generate_serpinsky(resolution: int = 10000, vertices: int = 3):
+    
+    """
+    - Plots the serpinsky triangle of resolution `resolution = 10000` by default
+    - Currently works only for `vertices = 3`
+    """
+
     main_p = []
     plt.figure()
     for i in range(vertices):
@@ -187,11 +262,20 @@ def generate_serpinsky(resolution: int=10000, vertices: int=3):
 
 # Amazing Graphs
 
-def dec_to_bin(n: int, reversed: bool=False):
+def dec_to_bin(n: int, reversed: bool = False):
+
+    """
+    Returns a binary string `binary` of positive integer `n`
+    """
+    
     binary = bin(n)[2:]
     return binary[::-1] if reversed else binary
 
 def bin_to_dec(bin_string: str, reversed: bool=True):
+
+    """
+    Returns positive integer `number` of string `bin_string`
+    """
 
     number = 0
 
@@ -206,12 +290,20 @@ def bin_to_dec(bin_string: str, reversed: bool=True):
 
 def get_primes():
 
+    """
+    Returns a list `prime_lst` of data read from file `10000primes.txt`
+    """
+
     with open('data/10000primes.txt', 'r') as fobj:
         prime_lst = [int(num) for num in fobj.read().split()]
 
     return prime_lst
 
 def generate_prime_trapz():
+
+    """
+    Plots the difference between binary prime and reversed binary prime list elements
+    """
 
     prime_lst = get_primes()
     bin_lst = [dec_to_bin(i) for i in prime_lst]
@@ -229,12 +321,13 @@ def generate_prime_trapz():
 def generate_forest_fires(num_limit: int=10000, document: bool=False, marker_size: float=0.5):
 
     """
-    *Generates a graph of the forest fire sequence (A229037)
-    *num_limit and document set at default values, recommended for low-performance computers
-    *marker_size = 0.5 is optimum for better looking graph
-    *Setting bool document = True makes the function print the algorithmic procedure at each step
-    *Outputs ff(num_limit) array
+    - Generates a graph of the forest fire sequence (A229037)
+    - num_limit and document set at default values, recommended for low-performance computers
+    - marker_size = 0.5 is optimum for better looking graph
+    - Setting bool document = True makes the function print the algorithmic procedure at each step
+    - Outputs ff(num_limit) array
     """
+
     ff = [1, 1]
     run = True
     counter = 0
@@ -256,6 +349,7 @@ def generate_forest_fires(num_limit: int=10000, document: bool=False, marker_siz
             last_ind = len(ff) - 1
             if document:
                 print("--------")
+                print(counter)
                 print("ff[last_ind] = " + str(ff[last_ind]))
                 print("ff[last_ind - k] = " + str(ff[last_ind - k]))
                 print("ff[last_ind - 2 * k] = " + str(ff[last_ind - 2 * k]))
@@ -272,8 +366,7 @@ def generate_forest_fires(num_limit: int=10000, document: bool=False, marker_siz
                 yes_count += 1
                 if yes_count == klist - 1:   
                     counter += 1
-                    if document:
-                        print(counter)
+                    print("--------")
                     trial = 1
                     break
                 
